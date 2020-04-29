@@ -1,0 +1,7 @@
+div
+  - if @items.empty?
+    div nothing here
+  - else
+    - @items.each do |item|
+      li = item.name
+
