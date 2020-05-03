@@ -1,7 +1,27 @@
-div
-  - if @items.empty?
-    div nothing here
+form method="post" action="/search_repositories"
+  p
+    | Github search criteria:
+    input type="search" name="query" value="#{@query}"
+    input type="submit"
+
+- if defined?(@error_message)
+  h4 An error occured:
+  .error style="display: inline-block; padding: 10px; background: #ffbcbc; color: #9e0000"
+    == @error_message
+
+- if defined?(@data)
+  - items = @data.items
+  - if items.empty?
+    h4 No results
   - else
-    - @items.each do |item|
-      li = item.name
+    - if @data.items_count == @data.total
+      h4 All #{@data.items_count} results shown:
+    - else
+      h4 First #{@data.items_count} of #{@data.total} results shown:
+
+    - items.each do |item|
+      li
+        a href="#{item.html_url}" #{item.full_name}
+
+
 
